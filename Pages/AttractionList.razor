@@ -1,0 +1,50 @@
+
+<!-- AttractionList.razor -->
+<div class="row">
+    @if (Attractions != null && Attractions.Count > 0)
+    {
+        @foreach (var attraction in Attractions)
+        {
+            <div class="col-md-4 mb-3 custom-card" @onclick="() => OnAttractionSelected(attraction.id)" style="cursor: pointer;">
+                <div class="card h-100 @(selectedAttractionId == attraction.id ? "selected-card" : "")">
+                    <img src="@attraction.images.Where(i => i.width == 640).FirstOrDefault().url" class="card-img-top" alt="@attraction.name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@attraction.name.ToUpper()</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <p class="text-muted">No results found for "@SearchTerm".</p>
+        </div>
+    }
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <button class="btn btn-primary custom-select-button" @onclick="SubmitSelectedAttraction">Select</button>
+</div>
+@code {
+    [Parameter] public List<AttractionDto> Attractions { get; set; } // List of attractions to display
+    [Parameter] public EventCallback<string> AttractionSelected { get; set; } // Event callback to parent component to pass the selected attraction ID to the parent component Index.razor. EventCallback is a generic type that takes the type of the parameter that will be passed to the parent component.
+    [Parameter] public string SearchTerm { get; set; } // Search term to display in the message when no results are found
+
+    private string selectedAttractionId; // Holds the ID of the selected attraction
+
+    // This method is called when a card is clicked
+    private void OnAttractionSelected(string id)
+    {
+        selectedAttractionId = id;
+    }
+
+    // This method is called when the "Select" button is clicked
+    private async Task SubmitSelectedAttraction()
+    {
+        if (!string.IsNullOrEmpty(selectedAttractionId) && AttractionSelected.HasDelegate)
+        {
+            await AttractionSelected.InvokeAsync(selectedAttractionId);
+        }
+    }
+}

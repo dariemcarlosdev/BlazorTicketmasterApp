@@ -1,9 +1,60 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@inject TicketmasterService TicketmasterService
+@inject NavigationManager NavigationManager
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="container">
+    <div>
+        <h3 class="my-4 custom-header">Search for Attractions</h3>
+    </div>
+    <SearchBar OnSearch="SearchAttractions" />
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+                
+            </div>
+        </div>
+    }
+    else
+    {
+        <AttractionList Attractions="attractions" AttractionSelected="OnAttractionSelected" SearchTerm="searchTerm" />
+    }
+</div>
+
+@code {
+    private List<AttractionDto> attractions; // List of attractions to display in the UI
+    private string searchTerm; // Search term entered by the user to filter attractions
+    private bool isLoading = false; // Indicates if the data is being loaded
+
+
+    // Search for attractions based on the specified term and update the list of attractions
+    private async Task SearchAttractions(string term)
+  {
+        searchTerm = term;
+        isLoading = true;
+
+        try
+        {
+            attractions = await TicketmasterService.SearchAttractionsAsync(searchTerm);
+        }
+        catch (Exception ex)
+        {
+            // show error message
+
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void OnAttractionSelected(string id)
+    {
+        NavigationManager.NavigateTo($"/attraction/{id}");
+    }
+}

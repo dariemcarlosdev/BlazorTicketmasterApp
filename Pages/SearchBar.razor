@@ -1,0 +1,30 @@
+﻿<!-- SearchBar.razor -->
+
+<div class="input-group mb-4">
+    <input type="text" class="form-control custom-search-input" @bind="SearchTerm" placeholder="Search for attractions..." aria-label="Search term" @oninput="OnInputChanged" />
+    <button class="btn btn-primary custom-select-button ms-2" @onclick="SubmitSearch">Search</button>
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> OnSearch { get; set; }  // Event callback to parent component to pass the search term to the parent component Index.razor. EventCallback is a generic type that takes the type of the parameter that will be passed to the parent component.
+    private string SearchTerm { get; set; } = "Phish"; // Default value for search term
+
+    
+    // This method is called when the input value changes. It updates the SearchTerm property and triggers the search immediately for dynamic updates.
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        SearchTerm = e.Value.ToString();
+        await SubmitSearch(); // Trigger search immediately for dynamic updates
+    }
+
+
+    // This method is called when the user clicks the "Search" button. It triggers the search with the current search term.
+    private async Task SubmitSearch()
+    {
+        // Check if the parent component has subscribed to the OnSearch event callback before invoking it to avoid null reference exception. It is a good practice to check if the event callback has a delegate assigned before invoking it.
+        if (OnSearch.HasDelegate)
+        {
+            await OnSearch.InvokeAsync(SearchTerm); // Invoke the OnSearch event callback with the current search term as the parameter.The search term is passed to the parent component Index.razor for processing.
+        }
+    }
+}

@@ -1,0 +1,207 @@
+﻿@page "/attraction/{id}"
+@inject TicketmasterService TicketmasterService
+@inject NavigationManager NavigationManager
+
+@* 
+Issue#1: 
+
+The AttractionDetails component is responsible for displaying detailed information about a specific attraction.
+I was encountering some issues, possibly due to the way asynchronous tasks and error handling are managed
+
+Issue Description:
+ It seem the issue was likely related to the async task flow in your Razor component or the service methods, where an unhandled exception or an incomplete asynchronous call causes the method to terminate abruptly, leading to the premature return to the Razor component. 
+ This is common with async/await if exceptions are not handled properly, or if the component isn't awaiting the task correctly.
+
+Resulution:
+
+Improvements and Details:
+
+Loading Indicator:
+
+I've added a loading indicator (isLoading) to display a "Loading attraction details..." message while data is being fetched from the API.
+Graceful Fallback for Missing Images:
+
+The component checks if Attraction.images is null or empty and ensures there’s an image with the width of 640. If not, it provides a placeholder image to prevent the UI from crashing.
+Null Checks for External Links:
+
+Conditional rendering for the external link ensures that if Attraction.externalLinks?.homepage is null, a message is displayed instead of rendering a broken link.
+Error Handling:
+
+The LoadAttractionDetails method catches exceptions and sets an errorMessage that is displayed to the user. This prevents unhandled exceptions from propagating and breaking the UI.
+Navigation on Error:
+
+If the attraction is not found, the user is redirected to an error page (/error), but you can customize this behavior as needed.
+Events Section:
+
+I’ve left the Attraction.Events logic commented out as a placeholder for when you handle event data. Ensure you manage the loading state for events (isLoadingEvents) when you implement this part. *@
+
+@if (isLoading)
+{
+    <p>Loading attraction details...</p>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger">@errorMessage</p>
+}
+else if (Attraction != null)
+{
+    <div class="container my-4">
+
+        <h3 class="my-4 custom-header">Attraction Details</h3>
+
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    @if (Attraction.images != null && Attraction.images.Any(i => i.width == 640))
+                    {
+                        <img src="@Attraction.images.First(i => i.width == 1024).url" class="img-fluid rounded-start" alt="@Attraction.name" />
+                    }
+                    else
+                    {
+                        <img src="/images/placeholder.png" class="img-fluid rounded-start" alt="Image not available" />
+                    }
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@Attraction.name.ToUpper()</h5>
+                        @if (!string.IsNullOrEmpty(Attraction.externalLinks?.homepage.FirstOrDefault().ToString()))
+                        {
+
+                            <a href="@Attraction.externalLinks.homepage.FirstOrDefault()?.url" class="btn btn-primary btn-block custom-select-button" target="_blank">Visit Official Page</a>
+                        }
+                        else
+                        {
+                            <p>Homepage not available.</p>
+                        }
+                        <div class="social-links mt-3">
+                            <h6>Fallow us on:</h6>
+                            <ul class="list-unstyled">
+                                @if (Attraction.externalLinks != null)
+                                {
+                                    <li>
+
+                                        <a href="@Attraction.externalLinks.xtwitter?.FirstOrDefault()?.url" target="_blank" class="social-icon" aria-label="twitter">
+                                            <i class="fa-brands fa-x-twitter"></i>
+                                        </a>
+                                        <a href="@Attraction.externalLinks.youtube?.FirstOrDefault()?.url" target="_blank" class="social-icon" aria-label="Attraction.externalLinks.youtube">
+                                            <i class="fa-brands fa-youtube"></i>
+                                        </a>
+                                        <a href="@Attraction.externalLinks.spotify?.FirstOrDefault()?.url" target="_blank" class="social-icon" aria-label="Attraction.externalLinks.xtwitter">
+                                            <i class="fa-brands fa-spotify"></i>
+                                        </a>
+                                        <a href="@Attraction.externalLinks.homepage?.FirstOrDefault()?.url" target="_blank" class="social-icon" aria-label="Attraction.externalLinks.homepage">
+                                            <i class="fa-solid fa-earth-americas"></i>
+                                        </a>
+                                    </li>
+
+    @*                                 <li>
+                                        <a href="@Attraction.externalLinks.wiki.FirstOrDefault()?.url" target="_blank" class="social-icon" aria-label="Attraction.externalLinks.wiki">
+                                            <i class="fab fa-wiki"></i>
+                                        </a>
+                                    </li> *@
+                                }
+@*                                 @foreach (var link in Attraction.externalLinks?.social)
+                                {
+                                    <li><a href="@link.url" target="_blank">@link.type</a></li>
+                                } *@
+                                else
+                                {
+                                    <li>No social media links available.</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uncomment when handling event data -->
+        
+@if (Attraction.events != null && Attraction.events.Count > 0)
+{
+            <h4 class="custom-subheader">@Attraction.events.Count().ToString() Upcoming Events:</h4>
+    @foreach (var eventItem in Attraction.events)
+    {
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card custom-card">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                             <img src="@eventItem.Images[0].url" class="card-img custom-card-img" alt="@eventItem.Name"/>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p class="card-text"><small class="text-muted">@eventItem.LocalDate</small></p>
+                                <h5 class="card-title">@eventItem.Name</h5>
+                                <p class="card-text">@eventItem.Venue</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (isLoadingEvents)
+{
+    <p>Loading events...</p>
+}
+else
+{
+    <p>No upcoming events found for this attraction.</p>
+}
+        <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-secondary custom-select-button mt-3" @onclick="NavigateBack">Back to search</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>No attraction details available.</p>
+}
+
+@code {
+    [Parameter] public string Id { get; set; }
+    private AttractionDto Attraction;
+    private bool isLoading = true;
+    private bool isLoadingEvents = true;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAttractionDetails();
+
+    }
+
+
+    private async Task LoadAttractionDetails()
+    {
+        try
+        {
+            // Fetch attraction details using the service
+            Attraction = await TicketmasterService.GetAttractionByIdAsync(Id);
+
+            if (Attraction == null)
+            {
+                errorMessage = "Attraction not found.";
+                NavigationManager.NavigateTo("/error");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log and handle exception, displaying error message
+            errorMessage = "Failed to load attraction: " + ex.Message;
+        }
+        finally
+        {
+            // Ensure loading state is false after the operation
+            isLoading = false;
+            isLoadingEvents = false;
+        }
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
