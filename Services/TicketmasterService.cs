@@ -124,7 +124,7 @@ public class TicketmasterService
                         eventsList.responseData.Add(eventItem);
                     }
                     //order by event date
-                    eventsList.responseData = eventsList.responseData.OrderBy(e => e.LocalDate).ToList();
+                    eventsList.responseData = eventsList.responseData.OrderBy(e => DateTime.Parse(e.LocalDate)).ToList();
                     return eventsList.responseData;
                 }
                 else
