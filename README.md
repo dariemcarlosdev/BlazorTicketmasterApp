@@ -123,19 +123,19 @@ The application includes error handling for HTTP request errors, task cancellati
 Below is a log of the time spent developing this project:
 
 - **Initial Setup**: 
-- 3 hours This includes setting up the project, Github repository, Development Environment and configuring the Ticketmaster API key.
+- *3 hours* This includes setting up the project, Github repository, Development Environment and configuring the Ticketmaster API key.
 - **Model Creation**:
-- 3 hours
+- *3 hours*
 - **Service Implementation**: 
-- 5 hours. This includes the implementation of the TicketmasterService class, which contains methods to interact with the Ticketmaster API.
+- *5 hours*. This includes the implementation of the TicketmasterService class, which contains methods to interact with the Ticketmaster API.
 - **API Integration**: 
-- 5 hours. This Includes understanding the Ticketmaster API documentation, making HTTP requests, and handling JSON responses.
+- *5 hours*. This Includes understanding the Ticketmaster API documentation, making HTTP requests, and handling JSON responses.
 - **Testing and Debugging**:
-- 3 hours. I was not needed to create unit tests for this project. I tested the application manually by running it and verifying the results.
+- *3 hours*. I was not needed to create unit tests for this project. I tested the application manually by running it and verifying the results.
 - **Documentation**: 
-- 1 hour
+- *1 hour*
 
-**Total Time Spent**: 20 hours
+**Total Time Spent**: **20 hours**
 
 ## Conclusion
 
