@@ -5,6 +5,16 @@
 
 This project is a .NET application that interacts with the Ticketmaster API to fetch and display information about attractions and events. The application includes models for attractions, events, and images, and services to handle API requests and responses.
 
+## App Features
+
+### Key Features Highlight
+
+- **Search Bar: Enables users to search for attractions using the Ticketmaster API.
+- **Attractions List: Dynamically shows results from the search query with visual cards.
+- **Attraction Details: Displays details of selected attractions, including upcoming events.
+- **Responsive UI: Optimized for mobile and desktop using Bootstrap.
+- **Blazor Components: Efficient use of Blazor components for reusability and clean code structure.
+
 ## Necessary Tools and Frameworks
 
 - **.NET 8.0 SDK**: The project is built using .NET 8.0.
@@ -87,7 +97,7 @@ This project is a .NET application that interacts with the Ticketmaster API to f
 - **Dockerfile**
   - `Dockerfile` is used to build a Docker image for the application. It copies the application files, restores the dependencies, and builds the application.
 
-## Steps to Deploy the Solution
+## Steps to Deploy the Solution Locally.
 
 1. **Clone the Repository**
 
@@ -109,6 +119,24 @@ This project is a .NET application that interacts with the Ticketmaster API to f
 
 7. **Run the Application**
    Run the application by clicking on `Debug` > `Start Debugging` or pressing `F5`.
+
+## Continious Integration and Continious Deployment(CI/CD).
+
+This project is configured for Continuous Integration (CI) and Continuous Deployment (CD) using GitHub Actions. Whenever changes are pushed to the `development` branch, the CI pipeline runs tests(There is no Tests in the project due to its simplicity) and builds the project. When changes are merged into the `master` branch, the application is automatically deployed to Azure App Service.
+
+- **Deployment Service**: Azure App Service
+- **Deployment Method**: GitHub Actions
+- **App URL**: (https://blazorticketmasterapp.azurewebsites.net/)
+
+### Continuous Integration (CI)
+
+1. **Configure GitHub Actions for CI**:
+   - Ensure you have a `.github/workflows` directory in your repository.
+   - Add a workflow YAML file (`master_blazorticketmasterapp.yml`) to define the CI process.
+
+2. **Configure Azure App Service Deployment Center**:
+   - An Azure App Service is required to deploy the application.This was done manually in the Azure Portal.
+   - In `Deployment Center` > `GitHub`, the deployment source and branch were configured.
 
 ## Logging
 
