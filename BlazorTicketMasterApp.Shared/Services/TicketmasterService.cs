@@ -1,8 +1,8 @@
-﻿using BlazorTicketmasterApp.Models;
-using BlazorTicketmasterApp.Services;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
+﻿using BlazorTicketmasterApp.Shared.Models;
+using BlazorTicketmasterApp.Shared.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel;
 
 
 public class TicketmasterService
@@ -59,7 +59,10 @@ public class TicketmasterService
             }
             else
             {
+                
                 _logger.LogError($"Failed to fetch attractions with search term {searchTerm}. Status Code: {apiResponse.StatusCode}");
+                
+                
             }
         }
         // Handle different exceptions and log detailed errors

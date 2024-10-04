@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BlazorTicketmasterApp.Models
+namespace BlazorTicketmasterApp.Shared.Models
 {
     public class EventDto
     {

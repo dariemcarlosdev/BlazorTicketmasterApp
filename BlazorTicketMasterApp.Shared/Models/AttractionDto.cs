@@ -1,8 +1,4 @@
-﻿
-
-using System.Text.Json.Serialization;
-
-namespace BlazorTicketmasterApp.Models
+﻿namespace BlazorTicketmasterApp.Shared.Models
 {
     public class AttractionDto
     {
@@ -16,8 +12,4 @@ namespace BlazorTicketmasterApp.Models
         public List<EventDto>? events { get; set; } = new();
     }
 
-    public class Link
-    {
-        public string url { get; set; }
-    }
 }

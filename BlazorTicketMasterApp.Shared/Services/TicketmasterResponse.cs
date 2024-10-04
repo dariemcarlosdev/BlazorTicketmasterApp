@@ -1,7 +1,5 @@
 ﻿
-using BlazorTicketmasterApp.Models;
-
-namespace BlazorTicketmasterApp.Services
+namespace BlazorTicketmasterApp.Shared.Services
 {
     internal class TicketmasterResponse<T>
     {
