@@ -22,13 +22,16 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        # run: dotnet build --configuration Release
+        run: dotnet build .\BazorTicketMasterApp\BlazorTicketmasterApp.csproj --configuration Release
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        # run: dotnet test --no-build --verbosity normal
+        run: dotnet test .\BazorTicketMasterApp\BlazorTicketMasterApp.UnitTests\BlazorTicketMasterApp.UnitTests.csproj --no-build --verbosity normal
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        # run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish .\BazorTicketMasterApp\BlazorTicketmasterApp.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
