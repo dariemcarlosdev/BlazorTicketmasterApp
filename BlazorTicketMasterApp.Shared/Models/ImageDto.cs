@@ -1,4 +1,5 @@
-﻿namespace BlazorTicketmasterApp.Models
+﻿namespace BlazorTicketmasterApp.Shared.Models
+
 {
     public class ImageDto
     {

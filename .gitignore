@@ -2,6 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-*.json
-/BlazorTicketMasterApp.Shared/obj/BlazorTicketMasterApp.Shared.csproj.nuget.g.props
-/BlazorTicketMasterApp.UnitTests/obj/BlazorTicketMasterApp.UnitTests.csproj.nuget.g.props
+
+/BlazorTicketMasterApp.Shared/obj/
+/BlazorTicketMasterApp.Shared/bin/
+/BlazorTicketMasterApp.UnitTests/obj/
+/BlazorTicketMasterApp.UnitTests/bin/
