@@ -70,14 +70,23 @@ This project is a .NET application that interacts with the Ticketmaster API to f
 
 ## Project Structure
 
+The project has been restructured to include the following components:
+
+
+- **BlazorTicketMasterApp.Shared**: A separate library project that contains shared code and resources.
+
 - **Models**
   - `AttractionDto.cs`: Represents an attraction with associated events.
   - `EventDto.cs`: Represents an event with a foreign key to an attraction.
   - `ImageDto.cs`: Represents an image with a URL property.    
   - `ExternaLldDto.cs`: Represent an external link with a URL property. It is used in the AttractionDto class.
+
 - **Services**
   - `TicketmasterService.cs`: Contains methods to interact with the Ticketmaster API, including fetching attraction details, searching for attractions, and getting events by attraction ID.
   - `TicketmasterResponse.cs`: Contains the response from the Ticketmaster API.
+
+
+- **BlazorTicketMasterApp**: A separate project dedicated to unit tests.
 
 - **Components**
   - `AttractionDetails.razor`: Displays details about an attraction, including its name, description, and events.
@@ -96,6 +105,12 @@ This project is a .NET application that interacts with the Ticketmaster API to f
   - `Program.cs` is the entry point of the application. It creates a new Blazor WebAssembly application and configures the services. Dependency injection is also configured in this file.
 - **Dockerfile**
   - `Dockerfile` is used to build a Docker image for the application. It copies the application files, restores the dependencies, and builds the application.
+
+- **BlazorTicketMasterApp.UnitTests**: A separate project dedicated to unit tests.
+
+- `CustomHttpMessageHandler.cs`: A custom HTTP message handler that allows mocking HTTP responses in unit tests.This class is used to mock the HttpMessageHandler class and expose the SendAsync method as a Func as part of the public properties
+- `TicketmasterServiceTests.cs`: Contains unit tests for the TicketmasterService class. It includes tests for fetching attraction details, searching for attractions, and getting events by attraction ID. This test class uses the CustomHttpMessageHandler class to mock HTTP responses.						
+   and more.It was included in the project to demostrate how to write unit tests for the project. It runs as part of the CI Pipeline in GitHub Actions.
 
 ## Steps to Deploy the Solution Locally.
 
@@ -133,6 +148,14 @@ This project is configured for Continuous Integration (CI) and Continuous Deploy
 1. **Configure GitHub Actions for CI**:
    - Ensure you have a `.github/workflows` directory in your repository.
    - Add a workflow YAML file (`master_blazorticketmasterapp.yml`) to define the CI process.
+   - The GitHub Actions workflow has been updated to include unit tests as part of the CI pipeline.
+	
+	name: Run Unit Tests
+    run: dotnet test BlazorTicketMasterApp.UnitTests/BlazorTicketMasterApp.UnitTests.csproj --verbosity normal
+
+	This ensures that every push and pull request to the `Master` branch will trigger the CI pipeline, which includes building the project and running the unit tests.
+
+### Continuous Deployment (CD)
 
 2. **Configure Azure App Service Deployment Center**:
    - An Azure App Service is required to deploy the application.This was done manually in the Azure Portal.

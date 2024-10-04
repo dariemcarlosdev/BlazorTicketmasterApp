@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicketmasterApp", "Bl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicketMasterApp.Shared", "..\BlazorTicketMasterApp.Shared\BlazorTicketMasterApp.Shared.csproj", "{DA4286F3-9383-4446-902B-8A31925B07F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTicketMasterApp.UnitTests", "..\BlazorTicketMasterApp.UnitTests\BlazorTicketMasterApp.UnitTests.csproj", "{87370C22-9249-4ADE-9145-322908B12079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTicketMasterApp.UnitTests", "..\BlazorTicketMasterApp.UnitTests\BlazorTicketMasterApp.UnitTests.csproj", "{87370C22-9249-4ADE-9145-322908B12079}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89074E17-BEF0-4026-91B9-4A11E8B552ED}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
