@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests
         # run: dotnet test --no-build --verbosity normal
-        run: dotnet test BlazorTicketMasterApp/BlazorTicketMasterApp.UnitTests/BlazorTicketMasterApp.UnitTests.csproj --no-build --verbosity normal
+        run: dotnet test BlazorTicketMasterApp.UnitTests/BlazorTicketMasterApp.UnitTests.csproj --no-build --verbosity normal
 
       - name: dotnet publish
         # run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
