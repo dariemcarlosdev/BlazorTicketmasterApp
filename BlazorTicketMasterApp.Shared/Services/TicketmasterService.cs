@@ -59,7 +59,10 @@ public class TicketmasterService
             }
             else
             {
+                
                 _logger.LogError($"Failed to fetch attractions with search term {searchTerm}. Status Code: {apiResponse.StatusCode}");
+                
+                
             }
         }
         // Handle different exceptions and log detailed errors
