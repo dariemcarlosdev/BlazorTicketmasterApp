@@ -1,4 +1,4 @@
-# BlazorTicketmasterApp
+# BlazorApp TicketMaster Thirth-party API integration
 
 
 ## Project Description
